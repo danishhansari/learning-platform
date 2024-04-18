@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import z from "zod";
 import Admin from "../models/admin.model.js";
+import Course from "../models/course.model.js";
 
 const adminSignup = async (req, res) => {
   const usernameSchema = z.string();
@@ -29,6 +30,7 @@ const adminSignup = async (req, res) => {
     password: pass,
   })
     .then((user) => {
+      console.log("this is updated user", user);
       const accessToken = jwt.sign(
         {
           _id: user._id,
@@ -82,4 +84,19 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export { adminSignup, adminLogin };
+const uploadCourse = async (req, res) => {
+  const { title, description, price } = req.body;
+
+  try {
+    const entry = await Course.create({
+      title,
+      description,
+      price,
+    });
+    return res.status(200).json("course uploaded successfully");
+  } catch (error) {
+    return res.status(500).json({ msg: error });
+  }
+};
+
+export { adminSignup, adminLogin, uploadCourse };
