@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-export const verifyAdmin = (req, res, next) => {
+export const verifyJWT = (req, res, next) => {
   const token = req.headers.authorization;
   const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
   req.user = decoded._id;

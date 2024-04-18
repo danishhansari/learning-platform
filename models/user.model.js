@@ -10,7 +10,7 @@ const userSchema = Schema(
       type: String,
       require: true,
     },
-    purchasedCourses: [{ type: Schema.Types.ObjectId, ref: "Courses" }],
+    purchasedCourses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
   },
   { timestamps: true }
 );

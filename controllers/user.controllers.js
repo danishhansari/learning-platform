@@ -82,4 +82,24 @@ const userLogin = async (req, res) => {
   }
 };
 
-export { userSignup, userLogin };
+const purchaseCourse = async (req, res) => {
+  const courseId = req.params.id;
+  let userId = req.user;
+  console.log(userId);
+  try {
+    const entry = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: {
+          purchasedCourses: courseId,
+        },
+      },
+      { new: true }
+    );
+    return res.status(200).json(entry);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+export { userSignup, userLogin, purchaseCourse };

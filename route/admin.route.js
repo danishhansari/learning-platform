@@ -4,7 +4,7 @@ import {
   adminLogin,
   uploadCourse,
 } from "../controllers/admin.controllers.js";
-import { verifyAdmin } from "../middleware/admin.middleware.js";
+import { verifyJWT } from "../middleware/verify.middleware.js";
 
 const router = Router();
 
@@ -15,6 +15,6 @@ router.get("/", (req, res) => {
 router.post("/signup", adminSignup);
 router.post("/signin", adminLogin);
 
-router.post("/upload-course", verifyAdmin, uploadCourse);
+router.post("/upload-course", verifyJWT, uploadCourse);
 
 export default router;
