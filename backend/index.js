@@ -2,9 +2,11 @@ import express, { json } from "express";
 import userRouter from "./route/user.route.js";
 import adminRouter from "./route/admin.route.js";
 import { connectDB } from "./db/index.js";
+import cors from "cors";
 
 const app = express();
 app.use(json());
+app.use(cors());
 
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
