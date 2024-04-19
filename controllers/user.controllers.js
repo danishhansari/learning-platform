@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import z from "zod";
 import User from "../models/user.model.js";
+import Course from "../models/course.model.js";
 
 const userSignup = async (req, res) => {
   const usernameSchame = z.string();
@@ -102,4 +103,16 @@ const purchaseCourse = async (req, res) => {
   }
 };
 
-export { userSignup, userLogin, purchaseCourse };
+const getCourses = async (req, res) => {
+  const userId = req.user;
+
+  const user = await User.findById(userId);
+  const response = await Course.find({
+    _id: {
+      $in: user.purchasedCourses,
+    },
+  });
+  return res.status(200).json(response);
+};
+
+export { userSignup, userLogin, purchaseCourse, getCourses };
