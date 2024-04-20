@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <>
       <div className="flex px-[3vw] h-[80px] py-4 shadow-md gap-4 items-center w-full justify-between">
-        <button className="md:hidden" onClick={onOpen}>
+        <button className="md:hidden p-2" onClick={onOpen}>
           <i className="fi fi-rr-menu-burger"></i>
         </button>
 

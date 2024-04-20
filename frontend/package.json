@@ -14,9 +14,11 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@flaticon/flaticon-uicons": "^3.2.1",
+    "axios": "^1.6.8",
     "framer-motion": "^11.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {

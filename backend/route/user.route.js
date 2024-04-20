@@ -3,7 +3,8 @@ import {
   userSignup,
   userLogin,
   purchaseCourse,
-  getCourses, 
+  getCourses,
+  allCourses,
 } from "../controllers/user.controllers.js";
 import { verifyJWT } from "../middleware/verify.middleware.js";
 
@@ -18,5 +19,6 @@ router.post("/signin", userLogin);
 
 router.post("/purchase-course/:id", verifyJWT, purchaseCourse);
 router.get("/get-courses", verifyJWT, getCourses);
+router.get("/all-courses", allCourses);
 
 export default router;

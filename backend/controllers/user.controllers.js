@@ -117,4 +117,9 @@ const getCourses = async (req, res) => {
   return res.status(200).json(response);
 };
 
-export { userSignup, userLogin, purchaseCourse, getCourses };
+const allCourses = async (req, res) => {
+  const response = await Course.find({});
+  return res.status(200).json({ response });
+};
+
+export { userSignup, userLogin, purchaseCourse, getCourses, allCourses };

@@ -13,6 +13,15 @@ const courseSchema = Schema(
       type: Number,
       require: true,
     },
+    courseId: {
+      type: String,
+      require: true,
+      unique: true,
+    },
+    imgUrl: {
+      type: String,
+      require: true,
+    },
   },
   { timestamps: true }
 );
