@@ -19,6 +19,10 @@ connectDB(process.env.MONGO_URL)
     console.log(err);
   });
 
+app.get("/", (req, res) => {
+  res.status(200).json("Server is running fine");
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on ${process.env.PORT}`);
 });

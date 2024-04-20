@@ -8,14 +8,19 @@ const Navbar = () => {
   const { onOpen } = useContext(SidebarContext);
   const { colorMode, toggleColorMode } = useColorMode();
 
+  const checking = () => {
+    console.log("got click");
+  };
   return (
     <>
       <div className="flex px-[3vw] h-[80px] py-4 shadow-md gap-4 items-center w-full justify-between">
-        <button className="md:hidden p-2" onClick={onOpen}>
+        <button className="md:hidden" onClick={onOpen}>
           <i className="fi fi-rr-menu-burger"></i>
         </button>
 
-        <img src={logo} alt="logo" className="w-24 h-[80%]" />
+        <Link to="/">
+          <img src={logo} alt="logo" className="w-24 h-[80%]" />
+        </Link>
         <p className="hidden md:block">Categories</p>
         <div className="relative flex-1 h-full w-full  hidden md:flex items-center">
           <i className="fi fi-rr-search text-sm absolute left-4 top-1/2 -translate-y-1/2"></i>
