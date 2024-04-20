@@ -10,6 +10,7 @@ import { SidebarContext } from "../App";
 import { useContext } from "react";
 import logo from "../imgs/logo.png";
 import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function Sidebar() {
   const { isOpen, onClose } = useContext(SidebarContext);
@@ -35,6 +36,8 @@ function Sidebar() {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
+
+      <Outlet />
     </>
   );
 }

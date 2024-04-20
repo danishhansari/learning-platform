@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Sidebar from "../components/Sidebar";
 import Loader from "../components/Loader";
+import Card from "../components/Card";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -26,20 +26,16 @@ const Home = () => {
   }, []);
   return (
     <>
-      {loading === true ? <Loader /> : ""}
-      <Sidebar />
+      {console.log(courses)}
       <div className="h-cover px-[3vw] py-4 pt-8">
         <h1 className="text-4xl font-bold">Courses</h1>
+        {loading === true ? <Loader /> : ""}
 
-        {courses.map((course, item) => {
-          return (
-            <div key={item} className="course-card">
-              <p>{course.title}</p>
-              <p>{course.description}</p>
-              <p>{course.price}</p>
-            </div>
-          );
-        })}
+        <div className="flex flex-wrap gap-x-2 gap-y-4 mt-4">
+          {courses.map((course, item) => {
+            return <Card {...course} key={item} />;
+          })}
+        </div>
       </div>
     </>
   );

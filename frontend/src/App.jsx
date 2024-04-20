@@ -5,6 +5,7 @@ import { createContext } from "react";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
+import Sidebar from "./components/Sidebar";
 
 export const SidebarContext = createContext({});
 function App() {
@@ -16,9 +17,11 @@ function App() {
         <SidebarContext.Provider value={{ isOpen, onOpen, onClose }}>
           <Routes>
             <Route path="/" element={<Navbar />}>
-              <Route index element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/" element={<Sidebar />}>
+                <Route index element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+              </Route>
             </Route>
           </Routes>
         </SidebarContext.Provider>
