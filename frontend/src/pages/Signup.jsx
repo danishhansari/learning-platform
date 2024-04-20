@@ -2,7 +2,7 @@ import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
 
 const Signup = () => {
-  const userAuth = (formData) => {
+  const userSignup = (formData) => {
     axios
       .post(`${import.meta.env.VITE_SERVER}/user/signup`, formData)
       .then(() => {
@@ -43,7 +43,7 @@ const Signup = () => {
       );
     }
 
-    userAuth(formData);
+    userSignup(formData);
   };
 
   return (
