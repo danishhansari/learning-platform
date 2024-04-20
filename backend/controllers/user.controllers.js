@@ -7,9 +7,9 @@ const userSignup = async (req, res) => {
   const usernameSchame = z.string();
   const passwordSchame = z.string();
 
-  const { username, password } = req.body;
+  const { name, email, password } = req.body;
 
-  const user = usernameSchame.parse(username);
+  const user = usernameSchame.parse(email);
   const pass = passwordSchame.parse(password);
 
   const isUserExist = await User.findOne({
@@ -26,14 +26,16 @@ const userSignup = async (req, res) => {
     secure: true,
   };
   const createdUser = User.create({
-    username: user,
+    name: name,
+    email: user,
     password: pass,
   })
     .then((user) => {
       const accessToken = jwt.sign(
         {
           _id: user._id,
-          username: user.username,
+          name: user.name,
+          email: user.email,
           password: user.password,
         },
         process.env.ACCESS_TOKEN_SECRET
@@ -52,21 +54,21 @@ const userSignup = async (req, res) => {
 };
 
 const userLogin = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   const options = {
     httpOnly: true,
     secure: true,
   };
   try {
     const response = await User.find({
-      username,
+      email,
       password,
     });
     if (response.length > 0) {
       const accessToken = jwt.sign(
         {
           _id: response._id,
-          username: response.username,
+          email: response.email,
           password: response.password,
         },
         process.env.ACCESS_TOKEN_SECRET

@@ -1,8 +1,9 @@
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/react";
 import { createContext } from "react";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 export const SidebarContext = createContext({});
 function App() {
@@ -14,7 +15,8 @@ function App() {
         <SidebarContext.Provider value={{ isOpen, onOpen, onClose }}>
           <Routes>
             <Route path="/" element={<Navbar />}>
-              <Route index element={<Sidebar />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
             </Route>
           </Routes>
         </SidebarContext.Provider>

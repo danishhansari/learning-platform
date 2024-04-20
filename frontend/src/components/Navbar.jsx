@@ -36,12 +36,16 @@ const Navbar = () => {
             ></i>
           </button>
           <div className="hidden md:flex items-center gap-2">
-            <button className="font-semibold border-2 border-black bg-white py-1 px-4 hover:bg-black hover:text-white text-sm">
-              <Link to="/login">Log in</Link>
-            </button>
-            <button className="font-semibold border-2 border-black bg-black text-white py-1 px-4 hover:bg-white hover:text-black text-sm">
-              <Link to="/signup">Sign up</Link>
-            </button>
+            <Link to="/login">
+              <button className="font-semibold border-2 border-black bg-white py-1 px-4 hover:bg-black hover:text-white text-sm">
+                Log in
+              </button>
+            </Link>
+            <Link to="/signup">
+              <button className="font-semibold border-2 border-black bg-black text-white py-1 px-4 hover:bg-white hover:text-black text-sm">
+                Sign up
+              </button>
+            </Link>
           </div>
           <button>
             <i className="text-xl fi fi-rr-globe"></i>

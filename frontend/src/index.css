@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Gelasio&family=Inter:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
 @import "@flaticon/flaticon-uicons/css/all/all";
 
 @tailwind base;
@@ -11,9 +11,6 @@
 p {
   font-size: 0.925rem;
 }
-h1,
-h2,
-h3,
-h4 {
-  font-family: "Gelasio", serif;
+.h-cover{
+  height: calc(100vh - 80px);
 }
