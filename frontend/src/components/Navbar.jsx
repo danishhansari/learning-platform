@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import logo from "../imgs/logo.png";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { SidebarContext } from "../App";
 import { useColorMode } from "@chakra-ui/react";
 
@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex px-[3vw] h-[80px] py-4 shadow-xl gap-4 items-center w-full justify-between">
+      <div className="flex px-[3vw] h-[80px] py-4 shadow-md gap-4 items-center w-full justify-between">
         <button className="md:hidden" onClick={onOpen}>
           <i className="fi fi-rr-menu-burger"></i>
         </button>
@@ -37,14 +37,14 @@ const Navbar = () => {
           </button>
           <div className="hidden md:flex items-center gap-2">
             <button className="font-semibold border-2 border-black bg-white py-1 px-4 hover:bg-black hover:text-white text-sm">
-              Log in
+              <Link to="/login">Log in</Link>
             </button>
             <button className="font-semibold border-2 border-black bg-black text-white py-1 px-4 hover:bg-white hover:text-black text-sm">
-              Sign up
+              <Link to="/signup">Sign up</Link>
             </button>
           </div>
           <button>
-            <i className="fi fi-rr-globe"></i>
+            <i className="text-xl fi fi-rr-globe"></i>
           </button>
         </div>
       </div>
