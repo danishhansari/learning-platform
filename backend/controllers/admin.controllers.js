@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import z from "zod";
 import Admin from "../models/admin.model.js";
 import Course from "../models/course.model.js";
+import { nanoid } from "nanoid";
 
 const adminSignup = async (req, res) => {
   const usernameSchema = z.string();
@@ -85,13 +86,23 @@ const adminLogin = async (req, res) => {
 };
 
 const uploadCourse = async (req, res) => {
-  const { title, description, price } = req.body;
+  const { title, description, price, imgUrl } = req.body;
+
+  const courseId =
+    title
+      .replace(/[^a-zA-Z0-9]/g, " ")
+      .replace(/\s+/g, "-")
+      .trim() +
+    "-" +
+    nanoid();
 
   try {
     const entry = await Course.create({
       title,
       description,
       price,
+      imgUrl,
+      courseId,
     });
     return res.status(200).json("course uploaded successfully");
   } catch (error) {

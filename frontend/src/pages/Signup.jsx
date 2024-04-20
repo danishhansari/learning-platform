@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import Sidebar from "../components/Sidebar";
 
 const Signup = () => {
   const userSignup = (formData) => {
@@ -48,6 +49,7 @@ const Signup = () => {
 
   return (
     <>
+      <Sidebar />
       <div className="max-w-[350px] mx-auto w-full h-cover flex justify-center flex-col px-4">
         <Toaster />
         <h1 className="text-md font-bold mb-4">Sign up and start learning</h1>

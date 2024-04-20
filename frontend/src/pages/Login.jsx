@@ -1,5 +1,6 @@
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Login = () => {
   return (
     <>
       <Toaster />
+      <Sidebar />
       <div className="max-w-[350px] mx-auto w-full h-cover flex justify-center flex-col px-4">
         <h1 className="text-black text-md font-bold mb-4">
           Log in to you Udemy account
