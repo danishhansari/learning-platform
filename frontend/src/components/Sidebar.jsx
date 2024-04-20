@@ -4,24 +4,18 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  useDisclosure,
   Button,
   useColorMode,
 } from "@chakra-ui/react";
+import { SidebarContext } from "../App";
+import { useContext } from "react";
 
 function Sidebar() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen, onOpen, onClose } = useContext(SidebarContext);
 
   return (
     <>
-      <Button colorScheme="blue" onClick={onOpen}>
-        Open
-      </Button>
-      <Button colorScheme="blue" onClick={toggleColorMode}>
-        {colorMode === "light" ? "dark" : "light"}
-      </Button>
-      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen}>
+      <Drawer placement={"left"} onClose={onClose} isOpen={isOpen} size="xs">
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
