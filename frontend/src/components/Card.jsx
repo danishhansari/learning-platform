@@ -21,7 +21,9 @@ const CourseCard = ({
           <div className="flex-1">
             <p className="font-semibold md:text-lg">{title}</p>
             <p className="hidden md:block w-80 truncate text-">{description}</p>
-            <p className="text-blue-500 font-bold text-md md:text-lg">&#8377; {price}</p>
+            <p className="text-blue-500 font-bold text-md md:text-lg">
+              &#8377; {price}
+            </p>
             <p>{dateObject}</p>
           </div>
         </div>

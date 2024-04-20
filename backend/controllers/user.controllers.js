@@ -105,7 +105,7 @@ const purchaseCourse = async (req, res) => {
   }
 };
 
-const getCourses = async (req, res) => {
+const getMyCourses = async (req, res) => {
   const userId = req.user;
 
   const user = await User.findById(userId);
@@ -122,4 +122,24 @@ const allCourses = async (req, res) => {
   return res.status(200).json({ response });
 };
 
-export { userSignup, userLogin, purchaseCourse, getCourses, allCourses };
+const getCourse = async (req, res) => {
+  const { course_id } = req.params;
+  const response = await Course.find({
+    courseId: course_id,
+  });
+
+  if (response === null) {
+    return res.status(200).json({ message: "No course available" });
+  }
+
+  return res.status(200).json(response);
+};
+
+export {
+  userSignup,
+  userLogin,
+  purchaseCourse,
+  getMyCourses,
+  allCourses,
+  getCourse,
+};
