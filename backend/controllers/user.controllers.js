@@ -119,23 +119,22 @@ const purchaseCourse = async (req, res) => {
   const order = await getOrderId(courseId);
   let userId = req.user;
 
-  return res.status(200).json({ order });
-  // User.findByIdAndUpdate(
-  //   userId,
-  //   {
-  //     $push: {
-  //       purchasedCourses: courseId,
-  //     },
-  //   },
-  //   { new: true }
-  // )
-  //   .then(() => {
-  //     return res.status(200).json({ message: "success" });
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     return res.status(500).json("this is error", error);
-  //   });
+  User.findByIdAndUpdate(
+    userId,
+    {
+      $push: {
+        purchasedCourses: courseId,
+      },
+    },
+    { new: true }
+  )
+    .then(() => {
+      return res.status(200).json({ order });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(500).json("this is error", error);
+    });
 };
 
 const getMyCourses = async (req, res) => {
