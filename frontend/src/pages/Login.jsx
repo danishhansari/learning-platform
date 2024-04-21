@@ -1,12 +1,25 @@
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Cookie from "js-cookie";
 import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../App";
+
 const Login = () => {
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const userLogin = (formData) => {
     axios
       .post(`${import.meta.env.VITE_SERVER}/user/signin`, formData)
-      .then(() => {
+      .then(({ data, data: { accessToken, options } }) => {
+        console.log(accessToken);
+        const time = new Date(options.expires).getTime();
+        console.log(time);
+        setUser(data);
+
+        Cookie.set("accessToken", accessToken, {
+          expires: new Date(time),
+        });
         toast.success("logged in");
         navigate("/");
       })

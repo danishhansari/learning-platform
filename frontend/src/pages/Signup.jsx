@@ -1,12 +1,23 @@
 import axios from "axios";
+import Cookie from "js-cookie";
+import { useContext } from "react";
+import { UserContext } from "../App";
 import { Toaster, toast } from "react-hot-toast";
 
 const Signup = () => {
+  const { user, setUser } = useContext(UserContext);
   const userSignup = (formData) => {
     axios
       .post(`${import.meta.env.VITE_SERVER}/user/signup`, formData)
-      .then(() => {
+      .then(({ data, data: { accessToken, options } }) => {
         toast.success("User added ");
+        const time = new Date(options.expires).getTime();
+        console.log(time);
+        setUser(data);
+
+        Cookie.set("accessToken", accessToken, {
+          expires: new Date(time),
+        });
       })
       .catch((err) => {
         toast.error(err.message);

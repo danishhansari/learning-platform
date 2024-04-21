@@ -22,8 +22,9 @@ const userSignup = async (req, res) => {
   }
 
   const options = {
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: true,
+    // secure: true,
   };
   const createdUser = User.create({
     name: name,
@@ -45,7 +46,7 @@ const userSignup = async (req, res) => {
       return res
         .status(200)
         .cookie("accessToken", accessToken, options)
-        .json({ message: "User created successfully", accessToken });
+        .json({ message: "User created successfully", accessToken, options });
     })
     .catch((err) => {
       console.log(err);
@@ -55,38 +56,38 @@ const userSignup = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const { email, password } = req.body;
+  console.log({ email, password });
   const options = {
+    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
     httpOnly: true,
-    secure: true,
+    // secure: true,
   };
   try {
-    const response = await User.find({
+    const response = await User.findOne({
       email,
       password,
     });
-    if (response.length > 0) {
-      const accessToken = jwt.sign(
-        {
-          _id: response._id,
-          email: response.email,
-          password: response.password,
-        },
-        process.env.ACCESS_TOKEN_SECRET
-      );
-      return res
-        .status(200)
-        .cookie("accessToken", accessToken, options)
-        .json(response);
-    } else {
-      return res.status(200).json(response);
-    }
+    console.log(response);
+    const accessToken = jwt.sign(
+      {
+        _id: response._id,
+        email: response.email,
+        password: response.password,
+      },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    return res
+      .status(200)
+      .cookie("accessToken", accessToken, options)
+      .json({ response: response, accessToken, options });
   } catch (err) {
-    return res.status(500).json({ err });
+    console.log(err);
+    return res.status(500).json(err);
   }
 };
 
 const purchaseCourse = async (req, res) => {
-  const courseId = req.params.id;
+  const { courseId } = req.body;
   let userId = req.user;
   console.log(userId);
   try {
@@ -126,13 +127,27 @@ const getCourse = async (req, res) => {
   const { course_id } = req.params;
   const response = await Course.findOne({
     courseId: course_id,
-  }).select("-_id");
+  });
 
   if (response === null) {
     return res.status(200).json({ message: "No course available" });
   }
 
   return res.status(200).json(response);
+};
+
+const getUser = async (req, res) => {
+  const { accessToken } = req.body;
+  console.log(accessToken);
+
+  try {
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    const user = decoded._id;
+    const response = await User.findById(user).select("-password -_id");
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 };
 
 export {
@@ -142,4 +157,5 @@ export {
   getMyCourses,
   allCourses,
   getCourse,
+  getUser,
 };

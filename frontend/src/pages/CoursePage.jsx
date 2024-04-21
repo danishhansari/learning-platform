@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import Loader from "../components/Loader";
+import Cookie from "js-cookie";
 import axios from "axios";
 const CoursePage = () => {
   const [loading, setLoading] = useState(false);
@@ -19,6 +20,25 @@ const CoursePage = () => {
       })
       .catch((err) => {
         setLoading(false);
+        return toast.error(err.message);
+      });
+  };
+
+  const handleBuyCourse = (courseId) => {
+    let loadingToast = toast.loading("purchasing...");
+    axios
+      .post(`${import.meta.env.VITE_SERVER}/user/purchase-course`, courseId, {
+        headers: {
+          Authorization: `${Cookie.get("accessToken")}`,
+        },
+      })
+      .then(() => {
+        toast.dismiss(loadingToast);
+        return toast.success("course purchase");
+      })
+      .catch((err) => {
+        toast.dismiss(loadingToast);
+        console.log(err);
         return toast.error(err.message);
       });
   };
@@ -42,7 +62,10 @@ const CoursePage = () => {
             <p className="text-2xl text-blue-500 font-medium mb-8">
               Only &#8377;{course.price}
             </p>
-            <button className="bg-blue-700 text-white block w-full rounded-md py-4 text-xl hover:bg-blue-800">
+            <button
+              className="bg-blue-700 text-white block w-full rounded-md py-4 text-xl hover:bg-blue-800"
+              onClick={() => handleBuyCourse(course._id)}
+            >
               Buy the course
             </button>
           </div>

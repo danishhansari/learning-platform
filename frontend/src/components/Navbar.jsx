@@ -1,16 +1,18 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import logo from "../imgs/logo.png";
 import { Link, Outlet } from "react-router-dom";
-import { SidebarContext } from "../App";
+import { SidebarContext, UserContext } from "../App";
 import { useColorMode } from "@chakra-ui/react";
 
 const Navbar = () => {
   const { onOpen } = useContext(SidebarContext);
+
+  const {
+    user: { accessToken },
+  } = useContext(UserContext);
+
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const checking = () => {
-    console.log("got click");
-  };
   return (
     <>
       <div className="flex px-[3vw] h-[80px] py-4 shadow-md gap-4 items-center w-full justify-between">
@@ -31,7 +33,6 @@ const Navbar = () => {
           />
         </div>
         <p className="hidden md:block">Udemy Business</p>
-        <p className="hidden md:block text-xs md:text-sm">Teach on Udemy</p>
         <div className="flex gap-4 items-center">
           <button onClick={toggleColorMode}>
             <i
@@ -49,6 +50,11 @@ const Navbar = () => {
             <Link to="/signup">
               <button className="font-semibold border-2 border-black bg-black text-white py-1 px-4 hover:bg-white hover:text-black text-sm">
                 Sign up
+              </button>
+            </Link>
+            <Link to="/my-course">
+              <button className="font-semibold border-2 border-black bg-white py-1 px-4 hover:bg-black hover:text-white text-sm">
+                My Course
               </button>
             </Link>
           </div>

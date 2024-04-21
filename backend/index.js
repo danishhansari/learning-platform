@@ -3,10 +3,12 @@ import userRouter from "./route/user.route.js";
 import adminRouter from "./route/admin.route.js";
 import { connectDB } from "./db/index.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const app = express();
 app.use(json());
 app.use(cors());
+app.use(cookieParser());
 
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
