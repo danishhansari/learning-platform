@@ -26,12 +26,17 @@ const CoursePage = () => {
 
   const handleBuyCourse = (courseId) => {
     let loadingToast = toast.loading("purchasing...");
+    console.log(courseId);
     axios
-      .post(`${import.meta.env.VITE_SERVER}/user/purchase-course`, courseId, {
-        headers: {
-          Authorization: `${Cookie.get("accessToken")}`,
-        },
-      })
+      .post(
+        `${import.meta.env.VITE_SERVER}/user/purchase-course`,
+        { courseId },
+        {
+          headers: {
+            Authorization: `${Cookie.get("accessToken")}`,
+          },
+        }
+      )
       .then(() => {
         toast.dismiss(loadingToast);
         return toast.success("course purchase");

@@ -86,7 +86,7 @@ const userLogin = async (req, res) => {
 const purchaseCourse = async (req, res) => {
   const { courseId } = req.body;
   let userId = req.user;
-  console.log(userId);
+  console.log(courseId);
   try {
     const entry = await User.findByIdAndUpdate(
       userId,
