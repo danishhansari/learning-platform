@@ -11,14 +11,9 @@ import { useContext } from "react";
 import logo from "../imgs/logo.png";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { UserContext } from "../App";
 
 function Sidebar() {
   const { isOpen, onClose } = useContext(SidebarContext);
-  const {
-    user: { accessToken },
-    setUser,
-  } = useContext(UserContext);
 
   return (
     <>

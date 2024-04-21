@@ -3,9 +3,12 @@ import Cookie from "js-cookie";
 import { useContext } from "react";
 import { UserContext } from "../App";
 import { Toaster, toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const userSignup = (formData) => {
     axios
       .post(`${import.meta.env.VITE_SERVER}/user/signup`, formData)
@@ -18,6 +21,8 @@ const Signup = () => {
         Cookie.set("accessToken", accessToken, {
           expires: new Date(time),
         });
+
+        navigate("/");
       })
       .catch((err) => {
         toast.error(err.message);

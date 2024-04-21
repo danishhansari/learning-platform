@@ -8,10 +8,7 @@ import { UserContext } from "../App";
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [courses, setCourses] = useState([]);
-  const {
-    user: { accessToken },
-    setUser,
-  } = useContext(UserContext);
+  const {setUser} = useContext(UserContext)
 
   const fetchCourses = () => {
     axios

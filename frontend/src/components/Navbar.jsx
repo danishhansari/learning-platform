@@ -1,16 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import logo from "../imgs/logo.png";
 import { Link, Outlet } from "react-router-dom";
-import { SidebarContext, UserContext } from "../App";
+import { SidebarContext } from "../App";
 import { useColorMode } from "@chakra-ui/react";
 
 const Navbar = () => {
   const { onOpen } = useContext(SidebarContext);
-
-  const {
-    user: { accessToken },
-  } = useContext(UserContext);
-
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
