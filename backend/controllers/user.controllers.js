@@ -124,9 +124,9 @@ const allCourses = async (req, res) => {
 
 const getCourse = async (req, res) => {
   const { course_id } = req.params;
-  const response = await Course.find({
+  const response = await Course.findOne({
     courseId: course_id,
-  });
+  }).select("-_id");
 
   if (response === null) {
     return res.status(200).json({ message: "No course available" });

@@ -13,10 +13,9 @@ const CoursePage = () => {
     axios
       .get(`${import.meta.env.VITE_SERVER}/user/get-course/${courseId}`)
       .then(({ data }) => {
-        setCourse(data[0]);
+        setCourse(data);
         setLoading(false);
-        console.log(data[0]);
-        return toast.success("course fetched");
+        console.log(data);
       })
       .catch((err) => {
         setLoading(false);
@@ -32,7 +31,23 @@ const CoursePage = () => {
     <>
       <Toaster />
       {loading ? <Loader /> : ""}
-      <div>{courseId}</div>
+      <div className="h-cover mt-4 md:mt-8">
+        <div className="flex p-4 flex-col md:flex-row justify-center max-w-[1200px] gap-4 mx-auto w-full">
+          <img src={course.imgUrl} className="w-full" alt={course.title} />
+          <div className="data">
+            <p className="text-2xl font-semibold mb-4">{course.title}</p>
+
+            <p className="text-xl mb-4">{course.description}</p>
+
+            <p className="text-2xl text-blue-500 font-medium mb-8">
+              Only &#8377;{course.price}
+            </p>
+            <button className="bg-blue-700 text-white block w-full rounded-md py-4 text-xl hover:bg-blue-800">
+              Buy the course
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
