@@ -24,6 +24,31 @@ const CoursePage = () => {
       });
   };
 
+  const initPayment = (order) => {
+    const options = {
+      key: import.meta.env.KEY_ID,
+      amount: order.price,
+      currency: order.currency,
+      order_id: order.id,
+      handler: async (response) => {
+        axios
+          .post(`${import.meta.env.VITE_SERVER}/user/verify-payment`, response)
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+      theme: {
+        color: "3399cc"
+      }
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
   const handleBuyCourse = (courseId) => {
     let loadingToast = toast.loading("purchasing...");
     console.log(courseId);
@@ -37,8 +62,10 @@ const CoursePage = () => {
           },
         }
       )
-      .then(() => {
+      .then(({ data: { order } }) => {
+        console.log(order);
         toast.dismiss(loadingToast);
+        initPayment(order);
         return toast.success("course purchase");
       })
       .catch((err) => {

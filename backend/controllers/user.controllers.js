@@ -2,6 +2,9 @@ import jwt from "jsonwebtoken";
 import z from "zod";
 import User from "../models/user.model.js";
 import Course from "../models/course.model.js";
+import Razorpay from "razorpay";
+import { nanoid } from "nanoid";
+import crypto from "crypto";
 
 const userSignup = async (req, res) => {
   const usernameSchame = z.string();
@@ -83,24 +86,56 @@ const userLogin = async (req, res) => {
   }
 };
 
+const instance = new Razorpay({
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
+});
+
+const getOrderId = async (courseId) => {
+  try {
+    const response = await Course.findById(courseId);
+    const options = {
+      amount: response.price * 100, // amount in the smallest currency unit
+      currency: "INR",
+      receipt: nanoid(),
+    };
+    return new Promise((resolve, reject) => {
+      instance.orders.create(options, (err, order) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(order);
+        }
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 const purchaseCourse = async (req, res) => {
   const { courseId } = req.body;
+  const order = await getOrderId(courseId);
   let userId = req.user;
-  console.log(courseId);
-  try {
-    const entry = await User.findByIdAndUpdate(
-      userId,
-      {
-        $push: {
-          purchasedCourses: courseId,
-        },
-      },
-      { new: true }
-    );
-    return res.status(200).json(entry);
-  } catch (error) {
-    return res.status(500).json(error);
-  }
+
+  return res.status(200).json({ order });
+  // User.findByIdAndUpdate(
+  //   userId,
+  //   {
+  //     $push: {
+  //       purchasedCourses: courseId,
+  //     },
+  //   },
+  //   { new: true }
+  // )
+  //   .then(() => {
+  //     return res.status(200).json({ message: "success" });
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //     return res.status(500).json("this is error", error);
+  //   });
 };
 
 const getMyCourses = async (req, res) => {
@@ -147,6 +182,27 @@ const getUser = async (req, res) => {
   }
 };
 
+const verifyPayment = async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      req.body;
+    const sign = razorpay_order_id + "|" + razorpay_payment_id;
+    const expectedSign = crypto
+      .createHmac("sha256", process.env.KEY_SECRET)
+      .update(sign.toString())
+      .digest("hex");
+
+    if (razorpay_signature === expectedSign) {
+      return res.status(200).json({ message: "Payment verfied successfully" });
+    } else {
+      return res.status(500).json({ message: "Invalid signature send" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 export {
   userSignup,
   userLogin,
@@ -155,4 +211,5 @@ export {
   allCourses,
   getCourse,
   getUser,
+  verifyPayment,
 };
