@@ -6,7 +6,7 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import { SidebarContext } from "../App";
+import { SidebarContext, UserContext } from "../App";
 import { useContext } from "react";
 import logo from "../imgs/logo.png";
 import { Link } from "react-router-dom";
@@ -14,6 +14,9 @@ import { Outlet } from "react-router-dom";
 
 function Sidebar() {
   const { isOpen, onClose } = useContext(SidebarContext);
+  const {
+    user: { accessToken },
+  } = useContext(UserContext);
 
   return (
     <>
@@ -26,15 +29,20 @@ function Sidebar() {
           <DrawerCloseButton />
           <DrawerBody>
             <div className="flex flex-col items-start justify-start">
-              <button className="text-purple-600 text-md font-semibold my-4">
-                <Link to="/login">Login in</Link>
-              </button>
-              <button className="text-purple-600 text-md font-semibold">
-                <Link to="/signup">Sign up</Link>
-              </button>
-              <button className="text-purple-600 text-md font-semibold my-4">
-                <Link to="/my-course">My Course</Link>
-              </button>
+              {!accessToken ? (
+                <>
+                  <button className="text-purple-600 text-md font-semibold my-4">
+                    <Link to="/login">Login in</Link>
+                  </button>
+                  <button className="text-purple-600 text-md font-semibold">
+                    <Link to="/signup">Sign up</Link>
+                  </button>
+                </>
+              ) : (
+                <button className="text-purple-600 text-md font-semibold my-4">
+                  <Link to="/my-course">My Course</Link>
+                </button>
+              )}
             </div>
           </DrawerBody>
         </DrawerContent>

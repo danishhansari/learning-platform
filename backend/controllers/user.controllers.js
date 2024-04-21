@@ -15,7 +15,6 @@ const userSignup = async (req, res) => {
   const isUserExist = await User.findOne({
     username: user,
   });
-  console.log("is exists", isUserExist);
 
   if (isUserExist) {
     return res.status(403).json({ message: "User is already exists" });
@@ -41,7 +40,6 @@ const userSignup = async (req, res) => {
         },
         process.env.ACCESS_TOKEN_SECRET
       );
-      console.log(accessToken);
 
       return res
         .status(200)
@@ -67,7 +65,6 @@ const userLogin = async (req, res) => {
       email,
       password,
     });
-    console.log(response);
     const accessToken = jwt.sign(
       {
         _id: response._id,
